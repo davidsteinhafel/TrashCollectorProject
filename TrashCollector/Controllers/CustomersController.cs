@@ -16,6 +16,7 @@ namespace TrashCollector.Controllers
         }
         public IActionResult Index()
         {
+            var customers = _context.Customers.Include(x => x.IdentityUser).ToList();
             return View();
         }
     }
