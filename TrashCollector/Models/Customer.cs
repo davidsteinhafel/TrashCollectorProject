@@ -21,7 +21,7 @@ namespace TrashCollector.Models
         public string LastName { get; set; }
 
         [Display(Name = "Pick Up Day")]
-        public DateTime RoutinePickUp { get; set; }
+        public string RoutinePickUp { get; set; }
 
         [Display(Name = "One time Pick Up")]
         public DateTime OnePickUp { get; set; }
@@ -39,5 +39,7 @@ namespace TrashCollector.Models
         [Display(Name = "User Id")]
         public string IdentityUserId { get; set; }
         public IdentityUser IdentityUser { get; set; }
+        [NotMapped]
+        public IEnumerable<Day>Days { get; set; }
     }
 }

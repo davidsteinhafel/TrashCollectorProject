@@ -26,7 +26,7 @@ namespace TrashCollector.Models
         public bool PickUpComplete { get; set; }
 
         [Display(Name = "Pick Up Charge")]
-        public int Charge { get; set; }
+        public decimal Charge { get; set; }
 
         [ForeignKey("IdentityUser")]
         [Display(Name = "User Id")]
