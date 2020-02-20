@@ -73,7 +73,10 @@ namespace TrashCollector.Controllers
         public IActionResult Edit(int id)
         {
             var customer = _context.Customers.SingleOrDefault(x => x.Id == id);
-            return View(customer);            
+            var dayViewModel = new DayCustomerViewModel();
+            var days = _context.Days.Select(x => x.Name);
+            dayViewModel.Day = new SelectList(days);
+            return View(dayViewModel);
         }
         [HttpPost]
         public IActionResult Edit(Customer customer)
