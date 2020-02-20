@@ -1,78 +1,80 @@
-﻿@model IEnumerable<TrashCollector.Models.Customer>
-
+﻿@model TrashCollector.Models.Customer
+    
 @{
-    ViewData["Title"] = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_CustomerLayout.cshtml";
 }
 
-<h1>Index</h1>
+<!DOCTYPE html>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.FirstName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.LastName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.RoutinePickUp)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.OnePickUp)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Owed)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Start)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.End)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IdentityUser)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.FirstName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LastName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RoutinePickUp)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.OnePickUp)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Owed)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Start)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.End)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdentityUser.Id)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <p>
+        <a asp-action="Create">Create New</a>
+    </p>
+    <div class="table">
+        <div>
+            <h4>Customer</h4>
+            <hr />
+            <dl class="row">
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.FirstName)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.FirstName)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.LastName)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.LastName)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.RoutinePickUp)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.RoutinePickUp)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.OnePickUp)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.OnePickUp)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Owed)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Owed)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Start)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Start)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.End)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.End)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.IdentityUser)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.IdentityUser.Id)
+                </dd>
+            </dl>
+        </div>
+        <div>
+            <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+            <a asp-action="Details" asp-route-id="@Model.Id">Details</a> |
+            <a asp-action="Delete" asp-route-id="@Model.Id">Delete</a>
+        </div>
+    </div>
+</body>
+</html>

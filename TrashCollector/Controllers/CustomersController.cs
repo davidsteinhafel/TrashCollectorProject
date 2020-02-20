@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using TrashCollector.Data;
 using TrashCollector.Models;
@@ -20,12 +21,12 @@ namespace TrashCollector.Controllers
         public IActionResult Index()
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            
-            
-            var customers = _context.Customers.Include(x => x.IdentityUser).ToList();
-            
-            
-            return View(customers);
+            var customer = _context.Customers.Include(x => x.IdentityUser).Where(x => x.IdentityUserId == userId).FirstOrDefault();
+            if(customer == null)
+            {
+                return RedirectToAction("Create");
+            }
+            return View(customer);
         }
         public IActionResult Details(int id)
         {
@@ -33,12 +34,25 @@ namespace TrashCollector.Controllers
 
             return View(customer);
         }
+        [HttpGet]
+        public IActionResult Create()
+        {
+            var dayViewModel = new DayCustomerViewModel();
+            var days = _context.Days.Select(x => x.Name);
+            dayViewModel.Day = new SelectList(days);
+            
+            return View(dayViewModel);
+        }
+
         [HttpPost]
         public IActionResult Create(Customer customer)
         {
             if (customer.Id == 0)
             {
+                var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+                customer.IdentityUserId = userId;
                 _context.Customers.Add(customer);
+
             }
             else
             {
@@ -50,9 +64,7 @@ namespace TrashCollector.Controllers
                 customerInDb.Owed = customer.Owed;
                 customerInDb.Start = customer.Start;
                 customerInDb.End = customer.End;
-                customerInDb.IdentityUserId = customer.IdentityUserId;
-                var userId = customerInDb.IdentityUserId;
-                userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+                
             }
             _context.SaveChanges();
             return RedirectToAction("Index");
@@ -80,11 +92,12 @@ namespace TrashCollector.Controllers
         }
         public IActionResult Delete(int id)
         {
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var customer = _context.Customers.SingleOrDefault(x => x.Id == id);
             _context.Customers.Remove(customer);
             _context.SaveChanges();
             var customers = _context.Customers.Include(x => x.IdentityUser).ToList();
             return View("Index");
         }
-    }
+}
 }

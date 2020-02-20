@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TrashCollector.Data;
 
-namespace TrashCollector.Data.Migrations
+namespace TrashCollector.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200219200528_CustomerDB")]
-    partial class CustomerDB
+    [Migration("20200220155059_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -50,24 +50,24 @@ namespace TrashCollector.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "1",
-                            ConcurrencyStamp = "86968daa-cc3b-4e0c-8ebf-2e227e6fd842",
-                            Name = "Admin",
-                            NormalizedName = "ADMIN"
+                            Id = "0eefa984-7c4e-41bd-bca9-248076bada8d",
+                            ConcurrencyStamp = "dd76ee0a-45e7-41c2-b05b-9b37b6126c0f",
+                            Name = "Customer",
+                            NormalizedName = "CUSTOMER"
                         },
                         new
                         {
-                            Id = "2",
-                            ConcurrencyStamp = "70fafde3-3062-491a-a87e-4f5c6f52d422",
+                            Id = "62143fcb-2116-4594-8f9d-809f8fbe175a",
+                            ConcurrencyStamp = "6d417ac1-755c-49df-b0aa-ef0d94cd7af2",
                             Name = "Employee",
                             NormalizedName = "EMPLOYEE"
                         },
                         new
                         {
-                            Id = "3",
-                            ConcurrencyStamp = "218b9168-ed0b-4cef-9bb5-ac213dea200a",
-                            Name = "Customer",
-                            NormalizedName = "CUSTOMER"
+                            Id = "ef27aa59-72f1-4399-97c3-a6df3a2b9ef8",
+                            ConcurrencyStamp = "b42adeb2-fa92-4218-bbd8-8b23a766c934",
+                            Name = "Admin",
+                            NormalizedName = "ADMIN"
                         });
                 });
 
@@ -278,6 +278,58 @@ namespace TrashCollector.Data.Migrations
                     b.ToTable("Customers");
                 });
 
+            modelBuilder.Entity("TrashCollector.Models.Day", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Days");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Sunday"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Monday"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Tuesday"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Wednesday"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "Thursday"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Name = "Friday"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Name = "Saturday"
+                        });
+                });
+
             modelBuilder.Entity("TrashCollector.Models.Employee", b =>
                 {
                     b.Property<int>("Id")
@@ -285,8 +337,8 @@ namespace TrashCollector.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("Charge")
-                        .HasColumnType("int");
+                    b.Property<decimal>("Charge")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("FirstName")
                         .HasColumnType("nvarchar(max)");

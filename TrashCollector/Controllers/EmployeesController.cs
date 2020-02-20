@@ -28,6 +28,11 @@ namespace TrashCollector.Controllers
             var employee = _context.Employees.Include(x => x.IdentityUser).SingleOrDefault(x => x.Id == id);
             return View(employee);
         }
+        [HttpGet]
+        public IActionResult Create()
+        {
+            return View();
+        }
         [HttpPost]
         public IActionResult Create(Employee employee)
         {
@@ -43,7 +48,6 @@ namespace TrashCollector.Controllers
                 employeeInDb.ZipCode = employee.ZipCode;
                 employeeInDb.PickUpComplete = employee.PickUpComplete;
                 employeeInDb.Charge = employee.Charge;
-                employeeInDb.IdentityUserId = employee.IdentityUserId;
                 var userId = employeeInDb.IdentityUserId;
                 userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 

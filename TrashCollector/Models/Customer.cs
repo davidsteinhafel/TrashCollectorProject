@@ -19,7 +19,7 @@ namespace TrashCollector.Models
 
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
-
+        [Required]
         [Display(Name = "Pick Up Day")]
         public string RoutinePickUp { get; set; }
 
