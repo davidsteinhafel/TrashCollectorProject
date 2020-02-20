@@ -102,5 +102,26 @@ namespace TrashCollector.Controllers
             var customers = _context.Customers.Include(x => x.IdentityUser).ToList();
             return View("Index");
         }
-}
+        //[HttpGet]
+        //public IActionResult SetPickUp(int id)
+        //{
+        //    var customer = _context.Customers.Single(x => x.Id == id);
+        //    return View(customer);
+        //}
+        //[HttpPost]
+        //public IActionResult SetPickUp(Customer customer)
+        //{
+        //    var customerInDb = _context.Customers.Single(x => x.Id == customer.Id);
+        //    customerInDb.OnePickUp = customer.OnePickUp;
+
+        //    if (customer.OnePickUp == null)
+        //    {
+        //        return View(customer);
+        //    }
+        //    else
+        //    {
+
+        //    }
+        //}
+    }
 }
