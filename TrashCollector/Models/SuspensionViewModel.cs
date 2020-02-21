@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -7,6 +8,12 @@ namespace TrashCollector.Models
 {
     public class SuspensionViewModel
     {
-        public Customer Customer { get; set; }
+        
+        [Required]
+        [Display(Name = "Start Date")]
+        public DateTime StartDay { get; set; }
+        [Required]
+        [Display(Name = "End Date")]
+        public DateTime EndDay { get; set; }
     }
 }

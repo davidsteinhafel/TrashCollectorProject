@@ -12,9 +12,6 @@
     <title>Index</title>
 </head>
 <body>
-    <p>
-        <a asp-action="Create">Create New</a>
-    </p>
     <div class="table">
         <div>
             <h4>Customer</h4>
@@ -45,12 +42,17 @@
                     @Html.DisplayFor(model => model.OnePickUp)
                 </dd>
                 <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.Owed)
+                    @Html.DisplayNameFor(model => model.Start)
                 </dt>
                 <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.Owed)
+                    @Html.DisplayFor(model => model.Start)
                 </dd>
-
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.End)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.End)
+                </dd>
             </dl>
         </div>
         <div>

@@ -102,26 +102,32 @@ namespace TrashCollector.Controllers
             var customers = _context.Customers.Include(x => x.IdentityUser).ToList();
             return View("Index");
         }
-        //[HttpGet]
-        //public IActionResult SetPickUp(int id)
-        //{
-        //    var customer = _context.Customers.Single(x => x.Id == id);
-        //    return View(customer);
-        //}
-        //[HttpPost]
-        //public IActionResult SetPickUp(Customer customer)
-        //{
-        //    var customerInDb = _context.Customers.Single(x => x.Id == customer.Id);
-        //    customerInDb.OnePickUp = customer.OnePickUp;
+        [HttpGet]
+        public IActionResult Suspension(int id)
+        {
+            var customer = _context.Customers.FirstOrDefault(x => x.Id == id);
+            var suspensionViewModel = new SuspensionViewModel();
+            return View(suspensionViewModel);
+        }
+        [HttpPost]
+        public IActionResult Suspension(SuspensionViewModel suspension)
+        {
+            if(ModelState.IsValid)
+            {
+                var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+                var customer = _context.Customers.SingleOrDefault(x => x.IdentityUserId == userId);
 
-        //    if (customer.OnePickUp == null)
-        //    {
-        //        return View(customer);
-        //    }
-        //    else
-        //    {
+                customer.Start = suspension.StartDay;
+                customer.End = suspension.EndDay;
+                _context.SaveChanges();
 
-        //    }
-        //}
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                return View(suspension);
+            }
+            
+        }
     }
 }
