@@ -55,8 +55,6 @@ namespace TrashCollector.Controllers
                 _context.SaveChanges();
                 dayCustomerViewModel.Customer.AddressId = dayCustomerViewModel.Customer.Address.Id;
                 _context.Customers.Add(dayCustomerViewModel.Customer);
-                
-                
             }
             //else
             //{
@@ -91,7 +89,6 @@ namespace TrashCollector.Controllers
         //    addressOnDb.StreetName = address.StreetName;
         //    _context.SaveChanges();
         //    return RedirectToAction("Index");
-
         //}
         [HttpGet]
         public IActionResult Edit(int id)
