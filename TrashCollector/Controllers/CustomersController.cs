@@ -45,17 +45,17 @@ namespace TrashCollector.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(Customer customer, Address address)
+        public IActionResult Create(Customer customer/*, Address address*/)
         {
             if (customer.Id == 0)
             {
                 var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
                 customer.IdentityUserId = userId;
-                _context.Addresses.Add(address);
+                //_context.Addresses.Add(address);
                 _context.Customers.Add(customer);
-                customer.Id = customer.Address.Id;
-                
-                
+                //customer.Id = customer.Address.Id;
+
+
 
             }
             else
@@ -69,35 +69,35 @@ namespace TrashCollector.Controllers
                 customerInDb.Owed = customer.Owed;
                 customerInDb.Start = customer.Start;
                 customerInDb.End = customer.End;
-                addressInDb.Address.State = address.State;
-                addressInDb.Address.City = address.City;
-                addressInDb.Address.ZipCode = address.ZipCode;
-                addressInDb.Address.StreetName = address.StreetName;
-                
+                //addressInDb.Address.State = address.State;
+                //addressInDb.Address.City = address.City;
+                //addressInDb.Address.ZipCode = address.ZipCode;
+                //addressInDb.Address.StreetName = address.StreetName;
+
 
             }
             _context.SaveChanges();
             return RedirectToAction("Index");
         }
-        //[HttpGet]
-        //public IActionResult AddressSet()
-        //{
-        //    var AddressOnDb = new Address();
-        //    var address = _context.Customers.Where(x => x.Id == x.AddressId);
-        //    return View(AddressOnDb);
-        //}
-        //[HttpPost]
-        //public IActionResult AddressPost(Address address, Customer customer)
-        //{
-        //    var addressOnDb = _context.Customers.SingleOrDefault(x => x.AddressId == address.Id);
-        //    addressOnDb.Address.State = customer.Address.State;
-        //    addressOnDb.Address.City = customer.Address.City;
-        //    addressOnDb.Address.ZipCode = customer.Address.ZipCode;
-        //    addressOnDb.Address.StreetName = customer.Address.StreetName;
-        //    _context.SaveChanges();
-        //    return RedirectToAction("Index");
+        [HttpGet]
+        public IActionResult AddressSet()
+        {
+            var AddressOnDb = new Address();
+            var address = _context.Customers.Where(x => x.Id == x.AddressId);
+            return View(AddressOnDb);
+        }
+        [HttpPost]
+        public IActionResult AddressPost(Address address, Customer customer)
+        {
+            var addressOnDb = _context.Customers.SingleOrDefault(x => x.AddressId == address.Id);
+            addressOnDb.Address.State = customer.Address.State;
+            addressOnDb.Address.City = customer.Address.City;
+            addressOnDb.Address.ZipCode = customer.Address.ZipCode;
+            addressOnDb.Address.StreetName = customer.Address.StreetName;
+            _context.SaveChanges();
+            return RedirectToAction("Index");
 
-        //}
+        }
         [HttpGet]
         public IActionResult Edit(int id)
         {
