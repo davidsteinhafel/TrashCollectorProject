@@ -35,11 +35,14 @@ namespace TrashCollector.Models
         [Display(Name = "End Date")]
         public DateTime End { get; set; }
 
+        [ForeignKey("Address")]
+        [Display(Name = "AddressId")]
+        public int? AddressId { get; set; }
+        public Address Address { get; set; }
+
         [ForeignKey("IdentityUser")]
         [Display(Name = "User Id")]
         public string IdentityUserId { get; set; }
         public IdentityUser IdentityUser { get; set; }
-        [NotMapped]
-        public IEnumerable<Day>Days { get; set; }
     }
 }

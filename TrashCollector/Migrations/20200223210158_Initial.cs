@@ -8,6 +8,23 @@ namespace TrashCollector.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "Address",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    City = table.Column<string>(nullable: true),
+                    State = table.Column<string>(nullable: true),
+                    ZipCode = table.Column<int>(nullable: false),
+                    StreetName = table.Column<string>(nullable: true),
+                    HouseNumber = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Address", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetRoles",
                 columns: table => new
                 {
@@ -173,16 +190,23 @@ namespace TrashCollector.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     FirstName = table.Column<string>(nullable: true),
                     LastName = table.Column<string>(nullable: true),
-                    RoutinePickUp = table.Column<string>(nullable: true),
+                    RoutinePickUp = table.Column<string>(nullable: false),
                     OnePickUp = table.Column<DateTime>(nullable: false),
                     Owed = table.Column<int>(nullable: false),
                     Start = table.Column<DateTime>(nullable: false),
                     End = table.Column<DateTime>(nullable: false),
+                    AddressId = table.Column<int>(nullable: false),
                     IdentityUserId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Customers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Customers_Address_AddressId",
+                        column: x => x.AddressId,
+                        principalTable: "Address",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Customers_AspNetUsers_IdentityUserId",
                         column: x => x.IdentityUserId,
@@ -220,9 +244,9 @@ namespace TrashCollector.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "0eefa984-7c4e-41bd-bca9-248076bada8d", "dd76ee0a-45e7-41c2-b05b-9b37b6126c0f", "Customer", "CUSTOMER" },
-                    { "62143fcb-2116-4594-8f9d-809f8fbe175a", "6d417ac1-755c-49df-b0aa-ef0d94cd7af2", "Employee", "EMPLOYEE" },
-                    { "ef27aa59-72f1-4399-97c3-a6df3a2b9ef8", "b42adeb2-fa92-4218-bbd8-8b23a766c934", "Admin", "ADMIN" }
+                    { "7ca79320-353e-441d-a75a-8ea5123a7fd7", "848fb83e-2fd6-4adc-ae39-839b00527fd2", "Customer", "CUSTOMER" },
+                    { "fd3aa238-7dda-4ebf-8072-f25b4d521be4", "65923a61-8e35-4c28-aad7-c7cd75105fe1", "Employee", "EMPLOYEE" },
+                    { "22f4e57b-8e0b-4a22-921f-4558ad5f1a9a", "037e8223-7d1d-463a-9ecb-de167c8ae928", "Admin", "ADMIN" }
                 });
 
             migrationBuilder.InsertData(
@@ -279,6 +303,11 @@ namespace TrashCollector.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Customers_AddressId",
+                table: "Customers",
+                column: "AddressId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Customers_IdentityUserId",
                 table: "Customers",
                 column: "IdentityUserId");
@@ -317,6 +346,9 @@ namespace TrashCollector.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "Address");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
