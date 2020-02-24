@@ -45,37 +45,32 @@ namespace TrashCollector.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(Customer customer, Address address)
+        public IActionResult Create(DayCustomerViewModel dayCustomerViewModel)
         {
-            if (customer.Id == 0)
+            if (dayCustomerViewModel.Customer.Id == 0)
             {
                 var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-                customer.IdentityUserId = userId;
-                _context.Addresses.Add(address);
-                _context.Customers.Add(customer);
-                customer.Id = customer.Address.Id;
+                dayCustomerViewModel.Customer.IdentityUserId = userId;
+                _context.Addresses.Add(dayCustomerViewModel.Customer.Address);
+                _context.SaveChanges();
+                dayCustomerViewModel.Customer.AddressId = dayCustomerViewModel.Customer.Address.Id;
+                _context.Customers.Add(dayCustomerViewModel.Customer);
                 
                 
-
             }
-            else
-            {
-                var customerInDb = _context.Customers.Single(x => x.Id == customer.Id);
-                var addressInDb = _context.Customers.Single(x => x.AddressId == address.Id);
-                customerInDb.FirstName = customer.FirstName;
-                customerInDb.LastName = customer.LastName;
-                customerInDb.RoutinePickUp = customer.RoutinePickUp;
-                customerInDb.OnePickUp = customer.OnePickUp;
-                customerInDb.Owed = customer.Owed;
-                customerInDb.Start = customer.Start;
-                customerInDb.End = customer.End;
-                addressInDb.Address.State = address.State;
-                addressInDb.Address.City = address.City;
-                addressInDb.Address.ZipCode = address.ZipCode;
-                addressInDb.Address.StreetName = address.StreetName;
-                
-
-            }
+            //else
+            //{
+            //    var addressInDb = _context.
+            //    var customerInDb = _context.Customers.Single(x => x.Id == customer.Id);
+            //    customerInDb.FirstName = customer.FirstName;
+            //    customerInDb.LastName = customer.LastName;
+            //    customerInDb.RoutinePickUp = customer.RoutinePickUp;
+            //    customerInDb.OnePickUp = customer.OnePickUp;
+            //    customerInDb.Owed = customer.Owed;
+            //    customerInDb.Start = customer.Start;
+            //    customerInDb.End = customer.End;
+            //    add
+            //}
             _context.SaveChanges();
             return RedirectToAction("Index");
         }
@@ -87,13 +82,13 @@ namespace TrashCollector.Controllers
         //    return View(AddressOnDb);
         //}
         //[HttpPost]
-        //public IActionResult AddressPost(Address address, Customer customer)
+        //public IActionResult AddressPost(Address address)
         //{
-        //    var addressOnDb = _context.Customers.SingleOrDefault(x => x.AddressId == address.Id);
-        //    addressOnDb.Address.State = customer.Address.State;
-        //    addressOnDb.Address.City = customer.Address.City;
-        //    addressOnDb.Address.ZipCode = customer.Address.ZipCode;
-        //    addressOnDb.Address.StreetName = customer.Address.StreetName;
+        //    var addressOnDb = _context.Addresses.SingleOrDefault(x => x.Id == address.Id);
+        //    addressOnDb.State = address.State;
+        //    addressOnDb.City = address.City;
+        //    addressOnDb.ZipCode = address.ZipCode;
+        //    addressOnDb.StreetName = address.StreetName;
         //    _context.SaveChanges();
         //    return RedirectToAction("Index");
 

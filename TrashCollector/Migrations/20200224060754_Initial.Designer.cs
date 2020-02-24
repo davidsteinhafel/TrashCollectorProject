@@ -10,8 +10,8 @@ using TrashCollector.Data;
 namespace TrashCollector.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200223222232_AddAddress")]
-    partial class AddAddress
+    [Migration("20200224060754_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -50,22 +50,22 @@ namespace TrashCollector.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "12e89d07-629d-47ea-aa5c-bfc79deb3374",
-                            ConcurrencyStamp = "2c8efda5-c210-41cd-a997-57c4c4c73340",
+                            Id = "3fdac144-67b9-4b30-9a1f-b0fe64ddf7f7",
+                            ConcurrencyStamp = "f01b4a1a-fbf7-4740-9a49-e36711484a2e",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         },
                         new
                         {
-                            Id = "fdffa0e1-47e3-47c1-8d0f-679547b934d2",
-                            ConcurrencyStamp = "b055a398-a57f-4bea-9b2e-5361f1ee9939",
+                            Id = "9e469c65-443d-4b9b-8dff-a7045f0eb22b",
+                            ConcurrencyStamp = "c599b38b-4716-4b70-b527-ee51610f2716",
                             Name = "Employee",
                             NormalizedName = "EMPLOYEE"
                         },
                         new
                         {
-                            Id = "ad22ae46-867a-4d18-bbad-8fe19e7f9117",
-                            ConcurrencyStamp = "d9345fb9-cf5e-4e23-a925-2bfbcc5c7f60",
+                            Id = "2671eca5-c2f1-4b06-8fe8-98c2798b0b05",
+                            ConcurrencyStamp = "a00ecb8c-edc5-4081-9624-3975a1b56182",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
@@ -271,7 +271,7 @@ namespace TrashCollector.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("AddressId")
+                    b.Property<int?>("AddressId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("End")
@@ -447,9 +447,7 @@ namespace TrashCollector.Migrations
                 {
                     b.HasOne("TrashCollector.Models.Address", "Address")
                         .WithMany()
-                        .HasForeignKey("AddressId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("AddressId");
 
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "IdentityUser")
                         .WithMany()

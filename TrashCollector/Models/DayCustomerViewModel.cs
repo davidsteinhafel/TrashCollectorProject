@@ -10,5 +10,6 @@ namespace TrashCollector.Models
     {
         public Customer Customer { get; set; }
         public SelectList Day { get; set; }
+        public Address Address { get; set; }
     }
 }

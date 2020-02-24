@@ -8,7 +8,7 @@ namespace TrashCollector.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Address",
+                name: "Addresses",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -16,12 +16,11 @@ namespace TrashCollector.Migrations
                     City = table.Column<string>(nullable: true),
                     State = table.Column<string>(nullable: true),
                     ZipCode = table.Column<int>(nullable: false),
-                    StreetName = table.Column<string>(nullable: true),
-                    HouseNumber = table.Column<int>(nullable: false)
+                    StreetName = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Address", x => x.Id);
+                    table.PrimaryKey("PK_Addresses", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -195,18 +194,18 @@ namespace TrashCollector.Migrations
                     Owed = table.Column<int>(nullable: false),
                     Start = table.Column<DateTime>(nullable: false),
                     End = table.Column<DateTime>(nullable: false),
-                    AddressId = table.Column<int>(nullable: false),
+                    AddressId = table.Column<int>(nullable: true),
                     IdentityUserId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Customers", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Customers_Address_AddressId",
+                        name: "FK_Customers_Addresses_AddressId",
                         column: x => x.AddressId,
-                        principalTable: "Address",
+                        principalTable: "Addresses",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Customers_AspNetUsers_IdentityUserId",
                         column: x => x.IdentityUserId,
@@ -244,9 +243,9 @@ namespace TrashCollector.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "7ca79320-353e-441d-a75a-8ea5123a7fd7", "848fb83e-2fd6-4adc-ae39-839b00527fd2", "Customer", "CUSTOMER" },
-                    { "fd3aa238-7dda-4ebf-8072-f25b4d521be4", "65923a61-8e35-4c28-aad7-c7cd75105fe1", "Employee", "EMPLOYEE" },
-                    { "22f4e57b-8e0b-4a22-921f-4558ad5f1a9a", "037e8223-7d1d-463a-9ecb-de167c8ae928", "Admin", "ADMIN" }
+                    { "3fdac144-67b9-4b30-9a1f-b0fe64ddf7f7", "f01b4a1a-fbf7-4740-9a49-e36711484a2e", "Customer", "CUSTOMER" },
+                    { "9e469c65-443d-4b9b-8dff-a7045f0eb22b", "c599b38b-4716-4b70-b527-ee51610f2716", "Employee", "EMPLOYEE" },
+                    { "2671eca5-c2f1-4b06-8fe8-98c2798b0b05", "a00ecb8c-edc5-4081-9624-3975a1b56182", "Admin", "ADMIN" }
                 });
 
             migrationBuilder.InsertData(
@@ -348,7 +347,7 @@ namespace TrashCollector.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "Address");
+                name: "Addresses");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
