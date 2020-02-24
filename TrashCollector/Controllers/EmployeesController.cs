@@ -20,8 +20,13 @@ namespace TrashCollector.Controllers
         public IActionResult Index()
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var employees = _context.Employees.Include(x => x.IdentityUser).ToList();
-            return View(employees);
+            var employee = _context.Employees.SingleOrDefault(x => x.IdentityUserId == userId);
+            var customerZip = _context.Customers.Include(x => x.Address).Where(y => y.Address.ZipCode == employee.ZipCode);
+            if (employee == null)
+            {
+                return RedirectToAction("Create");
+            }
+            return View(customerZip);
         }
         public IActionResult Details(int id)
         {
@@ -31,27 +36,15 @@ namespace TrashCollector.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            return View();
+            var employee = new Employee();
+            return View(employee);
         }
         [HttpPost]
         public IActionResult Create(Employee employee)
         {
-            if (employee.Id == 0)
-            {
-                _context.Employees.Add(employee);
-            }
-            else
-            {
-                var employeeInDb = _context.Employees.Single(x => x.Id == employee.Id);
-                employeeInDb.FirstName = employee.FirstName;
-                employeeInDb.LastName = employee.LastName;
-                employeeInDb.ZipCode = employee.ZipCode;
-                employeeInDb.PickUpComplete = employee.PickUpComplete;
-                employeeInDb.Charge = employee.Charge;
-                var userId = employeeInDb.IdentityUserId;
-                userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-            }
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            employee.IdentityUserId = userId;
+            _context.Employees.Add(employee);
             _context.SaveChanges();
             return RedirectToAction("Index");
         }
@@ -60,6 +53,19 @@ namespace TrashCollector.Controllers
         {
             var employee = _context.Employees.SingleOrDefault(x => x.Id == id);
             return View(employee);
+        }
+        [HttpPost]
+        public IActionResult Edit(Employee employee)
+        {
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var employees = _context.Employees.Include(x => x.IdentityUser).ToList();
+            var employeeInDb = _context.Employees.Single(x => x.IdentityUserId == userId);
+            employeeInDb.FirstName = employee.FirstName;
+            employeeInDb.LastName = employee.LastName;
+            employeeInDb.ZipCode = employee.ZipCode;
+            userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            _context.SaveChanges();
+            return RedirectToAction("Index");
         }
         public IActionResult Delete(int id)
         {

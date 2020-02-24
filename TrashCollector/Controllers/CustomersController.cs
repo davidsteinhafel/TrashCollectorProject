@@ -99,6 +99,7 @@ namespace TrashCollector.Controllers
             _context.SaveChanges();
             return RedirectToAction("Index");
         }
+        [HttpPost]
         public IActionResult Delete(int id)
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);

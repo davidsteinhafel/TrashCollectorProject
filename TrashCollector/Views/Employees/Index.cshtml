@@ -1,17 +1,12 @@
-﻿@model IEnumerable<TrashCollector.Models.Employee>
+﻿@model IEnumerable<TrashCollector.Models.Customer>
 
 @{
-    Layout = "~/Views/Shared/_CustomerLayout.cshtml";
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<!DOCTYPE html>
+<h1>Index</h1>
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Index</title>
-</head>
-<body>
 <p>
     <a asp-action="Create">Create New</a>
 </p>
@@ -25,13 +20,22 @@
                 @Html.DisplayNameFor(model => model.LastName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ZipCode)
+                @Html.DisplayNameFor(model => model.RoutinePickUp)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.PickUpComplete)
+                @Html.DisplayNameFor(model => model.OnePickUp)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Charge)
+                @Html.DisplayNameFor(model => model.Owed)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Start)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.End)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Address)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.IdentityUser)
@@ -49,13 +53,22 @@
                 @Html.DisplayFor(modelItem => item.LastName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ZipCode)
+                @Html.DisplayFor(modelItem => item.RoutinePickUp)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.PickUpComplete)
+                @Html.DisplayFor(modelItem => item.OnePickUp)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Charge)
+                @Html.DisplayFor(modelItem => item.Owed)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Start)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.End)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Address.Id)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.IdentityUser.Id)
@@ -69,5 +82,3 @@
 }
     </tbody>
 </table>
-</body>
-</html>

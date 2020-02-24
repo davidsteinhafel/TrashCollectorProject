@@ -9,6 +9,7 @@ namespace TrashCollector.Models
     public class DayCustomerViewModel
     {
         public Customer Customer { get; set; }
+        public Employee Employee { get; set; }
         public SelectList Day { get; set; }
         public Address Address { get; set; }
     }
