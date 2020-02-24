@@ -22,8 +22,8 @@ namespace TrashCollector.Models
         [Required]
         [Display(Name = "Pick Up Day")]
         public string RoutinePickUp { get; set; }
-
-        [Display(Name = "One time Pick Up")]
+        
+        [Display(Name = "One Time Pick Up")]
         public DateTime OnePickUp { get; set; }
 
         [Display(Name = "Money Owed")]

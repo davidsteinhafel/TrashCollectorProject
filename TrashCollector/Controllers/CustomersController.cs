@@ -59,24 +59,6 @@ namespace TrashCollector.Controllers
             _context.SaveChanges();
             return RedirectToAction("Index");
         }
-        //[HttpGet]
-        //public IActionResult AddressSet()
-        //{
-        //    var AddressOnDb = new Address();
-        //    var address = _context.Customers.Where(x => x.Id == x.AddressId);
-        //    return View(AddressOnDb);
-        //}
-        //[HttpPost]
-        //public IActionResult AddressPost(Address address)
-        //{
-        //    var addressOnDb = _context.Addresses.SingleOrDefault(x => x.Id == address.Id);
-        //    addressOnDb.State = address.State;
-        //    addressOnDb.City = address.City;
-        //    addressOnDb.ZipCode = address.ZipCode;
-        //    addressOnDb.StreetName = address.StreetName;
-        //    _context.SaveChanges();
-        //    return RedirectToAction("Index");
-        //}
         [HttpGet]
         public IActionResult OneTimePickUp(int id)
         {
@@ -89,8 +71,9 @@ namespace TrashCollector.Controllers
         [HttpPost]
         public IActionResult OneTimePickUp(DayCustomerViewModel dayCustomerViewModel)
         {
-            var customerInDb = _context.Customers.Single(x => x.Id == dayCustomerViewModel.Customer.Id);
-
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            dayCustomerViewModel.Customer.IdentityUserId = userId;
+            var customerInDb = _context.Customers.Single(x => x.IdentityUserId == userId);
             customerInDb.OnePickUp = dayCustomerViewModel.Customer.OnePickUp;
             _context.SaveChanges();
             return RedirectToAction("Index");
@@ -107,15 +90,12 @@ namespace TrashCollector.Controllers
         [HttpPost]
         public IActionResult Edit(DayCustomerViewModel dayCustomerViewModel)
         {
-            var customerInDb = _context.Customers.Single(x => x.Id == dayCustomerViewModel.Customer.Id);
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            dayCustomerViewModel.Customer.IdentityUserId = userId;
+            var customerInDb = _context.Customers.Single(x => x.IdentityUserId == userId);
             customerInDb.FirstName = dayCustomerViewModel.Customer.FirstName;
             customerInDb.LastName = dayCustomerViewModel.Customer.LastName;
             customerInDb.RoutinePickUp = dayCustomerViewModel.Customer.RoutinePickUp;
-            customerInDb.OnePickUp = dayCustomerViewModel.Customer.OnePickUp;
-            customerInDb.Owed = dayCustomerViewModel.Customer.Owed;
-            customerInDb.Start = dayCustomerViewModel.Customer.Start;
-            customerInDb.End = dayCustomerViewModel.Customer.End;
-            customerInDb.IdentityUserId = dayCustomerViewModel.Customer.IdentityUserId;
             _context.SaveChanges();
             return RedirectToAction("Index");
         }
