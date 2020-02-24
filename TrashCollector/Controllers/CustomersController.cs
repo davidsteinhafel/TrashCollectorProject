@@ -56,19 +56,6 @@ namespace TrashCollector.Controllers
                 dayCustomerViewModel.Customer.AddressId = dayCustomerViewModel.Customer.Address.Id;
                 _context.Customers.Add(dayCustomerViewModel.Customer);
             }
-            //else
-            //{
-            //    var addressInDb = _context.
-            //    var customerInDb = _context.Customers.Single(x => x.Id == customer.Id);
-            //    customerInDb.FirstName = customer.FirstName;
-            //    customerInDb.LastName = customer.LastName;
-            //    customerInDb.RoutinePickUp = customer.RoutinePickUp;
-            //    customerInDb.OnePickUp = customer.OnePickUp;
-            //    customerInDb.Owed = customer.Owed;
-            //    customerInDb.Start = customer.Start;
-            //    customerInDb.End = customer.End;
-            //    add
-            //}
             _context.SaveChanges();
             return RedirectToAction("Index");
         }
@@ -91,6 +78,24 @@ namespace TrashCollector.Controllers
         //    return RedirectToAction("Index");
         //}
         [HttpGet]
+        public IActionResult OneTimePickUp(int id)
+        {
+            var customer = _context.Customers.SingleOrDefault(x => x.Id == id);
+            var dayViewModel = new DayCustomerViewModel();
+            var days = _context.Days.Select(x => x.Name);
+            dayViewModel.Day = new SelectList(days);
+            return View(dayViewModel);
+        }
+        [HttpPost]
+        public IActionResult OneTimePickUp(DayCustomerViewModel dayCustomerViewModel)
+        {
+            var customerInDb = _context.Customers.Single(x => x.Id == dayCustomerViewModel.Customer.Id);
+
+            customerInDb.OnePickUp = dayCustomerViewModel.Customer.OnePickUp;
+            _context.SaveChanges();
+            return RedirectToAction("Index");
+        }
+        [HttpGet]
         public IActionResult Edit(int id)
         {
             var customer = _context.Customers.SingleOrDefault(x => x.Id == id);
@@ -100,17 +105,17 @@ namespace TrashCollector.Controllers
             return View(dayViewModel);
         }
         [HttpPost]
-        public IActionResult Edit(Customer customer)
+        public IActionResult Edit(DayCustomerViewModel dayCustomerViewModel)
         {
-            var customerInDb = _context.Customers.Single(x => x.Id == customer.Id);
-            customerInDb.FirstName = customer.FirstName;
-            customerInDb.LastName = customer.LastName;
-            customerInDb.RoutinePickUp = customer.RoutinePickUp;
-            customerInDb.OnePickUp = customer.OnePickUp;
-            customerInDb.Owed = customer.Owed;
-            customerInDb.Start = customer.Start;
-            customerInDb.End = customer.End;
-            customerInDb.IdentityUserId = customer.IdentityUserId;
+            var customerInDb = _context.Customers.Single(x => x.Id == dayCustomerViewModel.Customer.Id);
+            customerInDb.FirstName = dayCustomerViewModel.Customer.FirstName;
+            customerInDb.LastName = dayCustomerViewModel.Customer.LastName;
+            customerInDb.RoutinePickUp = dayCustomerViewModel.Customer.RoutinePickUp;
+            customerInDb.OnePickUp = dayCustomerViewModel.Customer.OnePickUp;
+            customerInDb.Owed = dayCustomerViewModel.Customer.Owed;
+            customerInDb.Start = dayCustomerViewModel.Customer.Start;
+            customerInDb.End = dayCustomerViewModel.Customer.End;
+            customerInDb.IdentityUserId = dayCustomerViewModel.Customer.IdentityUserId;
             _context.SaveChanges();
             return RedirectToAction("Index");
         }
