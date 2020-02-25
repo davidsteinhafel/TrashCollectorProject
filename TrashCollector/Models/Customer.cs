@@ -34,6 +34,8 @@ namespace TrashCollector.Models
 
         [Display(Name = "End Date")]
         public DateTime End { get; set; }
+        [Display(Name = "Charged")]
+        public bool Charged { get; set; }
 
         [ForeignKey("Address")]
         [Display(Name = "AddressId")]

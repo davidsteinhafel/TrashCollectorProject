@@ -194,6 +194,7 @@ namespace TrashCollector.Migrations
                     Owed = table.Column<int>(nullable: false),
                     Start = table.Column<DateTime>(nullable: false),
                     End = table.Column<DateTime>(nullable: false),
+                    Charged = table.Column<bool>(nullable: false),
                     AddressId = table.Column<int>(nullable: true),
                     IdentityUserId = table.Column<string>(nullable: true)
                 },
@@ -243,9 +244,9 @@ namespace TrashCollector.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "fdf38d18-4dca-428d-ae37-3eb4eb87b327", "95b01640-8418-47e1-a8cc-6bc2c4093c65", "Customer", "CUSTOMER" },
-                    { "ca89b543-b3bd-4fde-b420-a828f81b21db", "cfe5e3fa-8313-41d2-b037-521869b45628", "Employee", "EMPLOYEE" },
-                    { "ce4fb7d5-969c-4d98-8f66-01b5f24ab53c", "3e3ee23f-3a4d-41c0-8330-edb1c097dbfa", "Admin", "ADMIN" }
+                    { "6dafddc1-1fc6-49a0-9b20-3f53689e15c1", "6754e42b-6623-46fc-bf5a-b1220e1af06f", "Customer", "CUSTOMER" },
+                    { "a24b2dba-db5e-474f-a400-448a85534824", "a8e0586b-b84f-4327-b04e-62db5626362c", "Employee", "EMPLOYEE" },
+                    { "ef612a91-962c-42a1-a2d4-57a9495fbbb4", "56430d6e-7822-459f-9f53-f8db90585db9", "Admin", "ADMIN" }
                 });
 
             migrationBuilder.InsertData(

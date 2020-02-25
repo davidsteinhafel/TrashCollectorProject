@@ -19,14 +19,16 @@ namespace TrashCollector.Controllers
         }
         public IActionResult Index()
         {
+            var today = DateTime.Now;
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var employee = _context.Employees.SingleOrDefault(x => x.IdentityUserId == userId);
             var customerZip = _context.Customers.Include(x => x.Address).Where(y => y.Address.ZipCode == employee.ZipCode);
+            var customers = _context.Customers.Where(x => x.Address.ZipCode == employee.ZipCode && x.Charged == true && (x.Start >= today && x.End <= today));
             if (employee == null)
             {
                 return RedirectToAction("Create");
             }
-            return View(customerZip);
+            return View(customers);
         }
         public IActionResult Details(int id)
         {
@@ -58,7 +60,7 @@ namespace TrashCollector.Controllers
         public IActionResult Edit(Employee employee)
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var employees = _context.Employees.Include(x => x.IdentityUser).ToList();
+            var employees = _context.Employees.SingleOrDefault(x => x.IdentityUserId == userId);
             var employeeInDb = _context.Employees.Single(x => x.IdentityUserId == userId);
             employeeInDb.FirstName = employee.FirstName;
             employeeInDb.LastName = employee.LastName;
@@ -67,6 +69,34 @@ namespace TrashCollector.Controllers
             _context.SaveChanges();
             return RedirectToAction("Index");
         }
+        [HttpGet]
+        public IActionResult ConfirmPickUp(int id)
+        {
+            var customer = _context.Customers.SingleOrDefault(x => x.Id == id);
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var employee = _context.Employees.SingleOrDefault(x => x.IdentityUserId == userId);
+            var dayViewModel = new DayCustomerViewModel();
+            dayViewModel.Customer = customer;
+            dayViewModel.Employee = employee;
+            return View(new DayCustomerViewModel { Customer = dayViewModel.Customer, Employee = dayViewModel.Employee });
+        }
+        [HttpPost]
+        public IActionResult ConfirmPickup(DayCustomerViewModel dayCustomerViewModel)
+        {
+            var customer = _context.Customers.SingleOrDefault(x => x.Id == dayCustomerViewModel.Customer.Id);
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var employee = _context.Employees.SingleOrDefault(x => x.IdentityUserId == userId);
+            dayCustomerViewModel.Customer = customer;
+            dayCustomerViewModel.Employee = employee;
+
+            DateTime currentTime = DateTime.Now;
+            customer.Owed += 5;
+            customer.Charged = true;
+            _context.SaveChanges();
+            return RedirectToAction("Index");
+
+        }
+        
         public IActionResult Delete(int id)
         {
             var employee = _context.Employees.SingleOrDefault(x => x.Id == id);

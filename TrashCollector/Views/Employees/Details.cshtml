@@ -1,4 +1,4 @@
-﻿@model TrashCollector.Models.Employee
+﻿@model TrashCollector.Models.DayCustomerViewModel
 
 @{
     Layout = "~/Views/Shared/_CustomerLayout.cshtml";
@@ -18,45 +18,39 @@
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FirstName)
+            @Html.DisplayNameFor(model => model.Customer.FirstName)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.FirstName)
+            @Html.DisplayFor(model => model.Customer.FirstName)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.LastName)
+            @Html.DisplayNameFor(model => model.Customer.LastName)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.LastName)
+            @Html.DisplayFor(model => model.Customer.LastName)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ZipCode)
+            @Html.DisplayNameFor(model => model.Address.ZipCode)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ZipCode)
+            @Html.DisplayFor(model => model.Address.ZipCode)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PickUpComplete)
+            @Html.DisplayNameFor(model => model.Employee.PickUpComplete)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.PickUpComplete)
+            @Html.DisplayFor(model => model.Employee.PickUpComplete)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Charge)
+            @Html.DisplayNameFor(model => model.Employee.Charge)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Charge)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IdentityUser)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IdentityUser.Id)
+            @Html.DisplayFor(model => model.Employee.Charge)
         </dd>
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Edit" asp-route-id="@Model.Customer.Id">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>
 </body>
