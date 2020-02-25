@@ -11,6 +11,7 @@ namespace TrashCollector.Models
         public Customer Customer { get; set; }
         public Employee Employee { get; set; }
         public SelectList Day { get; set; }
+        public string filterDay { get; set; }
         public Address Address { get; set; }
     }
 }

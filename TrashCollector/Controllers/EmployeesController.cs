@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using TrashCollector.Data;
 using TrashCollector.Models;
@@ -96,7 +97,15 @@ namespace TrashCollector.Controllers
             return RedirectToAction("Index");
 
         }
-        
+        [HttpGet]
+        public IActionResult FilterDay(DayCustomerViewModel dayCustomerViewModel)
+        {
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var employee = _context.Employees.SingleOrDefault(x => x.IdentityUserId == userId);
+            var customerDay = _context.Customers.Where(x => x.RoutinePickUp == dayCustomerViewModel.filterDay);
+            return View("Index", customerDay);
+        }
+     
         public IActionResult Delete(int id)
         {
             var employee = _context.Employees.SingleOrDefault(x => x.Id == id);
