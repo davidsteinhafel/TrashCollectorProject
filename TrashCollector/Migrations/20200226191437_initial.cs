@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TrashCollector.Migrations
 {
-    public partial class Initial : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -244,9 +244,9 @@ namespace TrashCollector.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "6dafddc1-1fc6-49a0-9b20-3f53689e15c1", "6754e42b-6623-46fc-bf5a-b1220e1af06f", "Customer", "CUSTOMER" },
-                    { "a24b2dba-db5e-474f-a400-448a85534824", "a8e0586b-b84f-4327-b04e-62db5626362c", "Employee", "EMPLOYEE" },
-                    { "ef612a91-962c-42a1-a2d4-57a9495fbbb4", "56430d6e-7822-459f-9f53-f8db90585db9", "Admin", "ADMIN" }
+                    { "d5ff7440-9be3-46d1-8d66-e69cb4c856c6", "10ed6887-f235-4c22-be81-a7ad77e94060", "Customer", "CUSTOMER" },
+                    { "20ec51fb-177a-49f5-b837-57fe06707400", "63c3be8d-84e4-456b-9691-78c75359c304", "Employee", "EMPLOYEE" },
+                    { "bbb0e98a-87bf-49d2-9854-a3686910d29d", "dde3f9b1-99a2-4cc1-93d7-b8579792d52f", "Admin", "ADMIN" }
                 });
 
             migrationBuilder.InsertData(
